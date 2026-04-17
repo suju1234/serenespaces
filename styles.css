@@ -154,6 +154,13 @@ h1, h2, h3, h4 {
     overflow: hidden;
 }
 
+/* Mobile fix for background-attachment */
+@media (max-width: 768px) {
+    .hero {
+        background-attachment: scroll;
+    }
+}
+
 .hero-overlay {
     position: absolute;
     top: 0;
