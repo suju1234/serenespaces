@@ -4,8 +4,8 @@
   "description": "Serene Spaces Interior Design Website",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node dev-server.js",
+    "dev": "node dev-server.js"
   },
   "keywords": ["interior-design", "website"],
   "author": "",
