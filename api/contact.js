@@ -1,21 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Middleware
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
-// Serve static files
-app.use(express.static(__dirname));
-
-// Email configuration (update with your email credentials)
+// Email configuration
 const EMAIL_CONFIG = {
     service: 'gmail',
     auth: {
@@ -28,14 +20,6 @@ const OWNER_EMAIL = process.env.OWNER_EMAIL || 'pradeep@serenespaces.com';
 
 // Create email transporter
 const transporter = nodemailer.createTransport(EMAIL_CONFIG);
-
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Serve static files
-app.use(express.static(__dirname));
 
 // Contact form submission endpoint
 app.post('/api/contact', async (req, res) => {
@@ -102,13 +86,4 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
-// Start server (only for local development)
-if (require.main === module) {
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-        console.log(`Website available at http://localhost:${PORT}`);
-    });
-}
-
-// Export for Vercel serverless function
 module.exports = app;
