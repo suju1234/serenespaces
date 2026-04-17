@@ -7,8 +7,13 @@ const nodemailer = require('nodemailer');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Vercel serverless function handler
-module.exports = app;
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Serve static files
+app.use(express.static(__dirname));
 
 // Email configuration (update with your email credentials)
 const EMAIL_CONFIG = {
@@ -97,8 +102,13 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`Website available at http://localhost:${PORT}`);
-});
+// Start server (only for local development)
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+        console.log(`Website available at http://localhost:${PORT}`);
+    });
+}
+
+// Export for Vercel serverless function
+module.exports = app;
